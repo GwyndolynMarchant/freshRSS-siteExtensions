@@ -9,7 +9,7 @@ class DanbooruExtension extends Minz_Extension {
 
 
 	public function init(): void {
-        $this->registerHook('entry_before_insert', array($this, 'danbooruFix'));
+        $this->registerHook('entry_before_insert', array($this, 'embedDilbert'));
 	}
 
 	public function danbooruFix(FreshRSS_Entry $entry): FreshRSS_Entry {
@@ -54,11 +54,8 @@ class DanbooruExtension extends Minz_Extension {
         $comicContainer = $xpath->query("//section[@id='content']");
 
         if (!is_null($comicContainer)) {
-            $comicContainer = $comicContainer->item(0);
             $originalHash = $entry->hash();
-
-            $iconWithLink = $comicContainer->ownerDocument->saveHTML($node);
-            $entry->_content($iconWithLink);
+            $entry->_content($comicContainer->item(0)->ownerDocument->saveHTML($node));
             $entry->_hash($originalHash);
         }
 
