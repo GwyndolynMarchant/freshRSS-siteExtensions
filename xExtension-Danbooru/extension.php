@@ -2,6 +2,14 @@
 
 class DanbooruExtension extends Minz_Extension {
 
+	function debug_to_console($data) {
+	    $output = $data;
+	    if (is_array($output))
+	        $output = implode(',', $output);
+
+	    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+	}
+
     protected function supports($entry)
     {
         return (stripos($entry->link(), '://danbooru.donmai.us/posts') !== false);
@@ -15,6 +23,7 @@ class DanbooruExtension extends Minz_Extension {
 
 	public function danbooruFix(FreshRSS_Entry $entry): FreshRSS_Entry {
 		if (!$this->supports($entry)) { return $entry; }
+		debug_to_console("made it this far");
 
 		preg_match("/<p>(.*)<\/p>/", $entry->content(), $matches);
 		$entry->_tags(explode(" ", $matches[1]));
