@@ -11,12 +11,7 @@ class DanbooruExtension extends Minz_Extension {
      */
     protected function supports($entry)
     {
-        if (
-            stripos($entry->link(), '://danbooru.donmai.us/posts') === false
-        ) {
-            return false;
-        }
-        return true;
+        return (stripos($entry->link(), '://danbooru.donmai.us/posts') !== false);
     }
 
 
@@ -24,11 +19,11 @@ class DanbooruExtension extends Minz_Extension {
 		$this->registerHook('entry_before_insert', [$this, 'insertEntry']);
 	}
 
-	public function renderEntry(FreshRSS_Entry $entry): FreshRSS_Entry {
+	public function insertEntry(FreshRSS_Entry $entry): FreshRSS_Entry {
 		if (!$this->supports($entry)) { return $entry; }
 
 		preg_match("/<p>(.*)<\/p>/", $entry->content(), $matches);
-		$entry->_tags(preg_split("/\w/", $matches[1]));
+		$entry->_tags(explode(" ", $matches[1]));
 		
 		$dom = new DOMDocument;
         $dom->loadHTMLFile($entry->link());
