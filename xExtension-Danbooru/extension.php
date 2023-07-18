@@ -2,13 +2,6 @@
 
 class DanbooruExtension extends Minz_Extension {
 
-    /**
-     * Check if we support working on this entry.
-     * We do not want to parse every displayed entry, but only the DILBERT ones ;-)
-     *
-     * @param FreshRSS_Entry $entry
-     * @return bool
-     */
     protected function supports($entry)
     {
         return (stripos($entry->link(), '://danbooru.donmai.us/posts') !== false);
@@ -16,10 +9,12 @@ class DanbooruExtension extends Minz_Extension {
 
 
 	public function init(): void {
-		$this->registerHook('entry_before_insert', [$this, 'insertEntry']);
+
+        $this->registerHook('entry_before_insert', array($this, 'danbooruFix'));
+        $this->registerHook('entry_before_display', array($this, 'danbooruFix'));
 	}
 
-	public function insertEntry(FreshRSS_Entry $entry): FreshRSS_Entry {
+	public function danbooruFix(FreshRSS_Entry $entry): FreshRSS_Entry {
 		if (!$this->supports($entry)) { return $entry; }
 
 		preg_match("/<p>(.*)<\/p>/", $entry->content(), $matches);
