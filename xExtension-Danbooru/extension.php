@@ -12,6 +12,7 @@ class DanbooruExtension extends Minz_Extension {
 
     protected function supports($entry)
     {
+    	debug_to_console("checking if the url is supported");
         return (stripos($entry->link(), '://danbooru.donmai.us/posts') !== false);
     }
 
