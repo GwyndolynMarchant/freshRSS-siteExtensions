@@ -9,9 +9,8 @@ class DanbooruExtension extends Minz_Extension {
 
 
 	public function init(): void {
-
         $this->registerHook('entry_before_insert', array($this, 'danbooruFix'));
-        $this->registerHook('entry_before_display', array($this, 'danbooruFix'));
+        //$this->registerHook('entry_before_display', array($this, 'danbooruFix'));
 	}
 
 	public function danbooruFix(FreshRSS_Entry $entry): FreshRSS_Entry {
