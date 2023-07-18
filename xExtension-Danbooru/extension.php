@@ -25,7 +25,9 @@ class DanbooruExtension extends Minz_Extension {
         $comicContainer = $xpath->query("//section[id=\"content\"]");
 
         if (!is_null($comicContainer)) {
-        	$entry->_content($entry->text() . '\n' . $comicContainer->item(0)->ownerDocument->saveHTML($node));
+        	$originalHash = $entry->hash();
+        	$entry->_content($entry->content() . '\n' . $comicContainer->item(0)->ownerDocument->saveHTML($node));
+        	$entry->_hash($originalHash);
         }
 
 		return $entry;
