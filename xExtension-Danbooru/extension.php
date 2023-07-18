@@ -8,8 +8,12 @@ class DanbooruExtension extends Minz_Extension {
     }
 
 
+    public function install() { return true; }
+    public function uninstall() { return true; }
+    public function handleConfigureAction() { }
+
 	public function init(): void {
-        $this->registerHook('entry_before_insert', array($this, 'embedDilbert'));
+        $this->registerHook('entry_before_insert', array($this, 'danbooruFix'));
 	}
 
 	public function danbooruFix(FreshRSS_Entry $entry): FreshRSS_Entry {
@@ -25,11 +29,13 @@ class DanbooruExtension extends Minz_Extension {
         $xpath = new DOMXpath($dom);
         $content = $xpath->query("//section[@id='content']");
 
+        $originalHash = $entry->hash();
         if (!is_null($content)) {
         	$entry->_content($entry->content() . '\n' . $content->item(0)->ownerDocument->saveHTML($node));
         } else {
         	$entry->_content("We've got a problem!");
         }
+        $entry->_hash($originalHash);
 
 		return $entry;
 	}
