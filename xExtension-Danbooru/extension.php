@@ -11,10 +11,8 @@ class DanbooruExtension extends Minz_Extension {
      */
     protected function supports($entry)
     {
-        $link = $entry->link();
-
         if (
-            stripos($link, '://danbooru.donmai.us/posts') === false
+            stripos($entry->link(), '://danbooru.donmai.us/posts') === false
         ) {
             return false;
         }
@@ -38,7 +36,7 @@ class DanbooruExtension extends Minz_Extension {
         $comicContainer = $xpath->query("//section[id=\"content\"]");
 
         if (!is_null($comicContainer)) {
-        	$entry->text($entry->text() . '\n' . $comicContainer->item(0)->ownerDocument->saveHTML($node));
+        	$entry->_content($entry->text() . '\n' . $comicContainer->item(0)->ownerDocument->saveHTML($node));
         }
 
 		return $entry;
