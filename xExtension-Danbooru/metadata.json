@@ -1,0 +1,8 @@
+{
+	"name": "Danbooru Support",
+	"author": "Gwyndolyn Marchant",
+	"description": "Fixes danbooru feeds",
+	"version": "0.0.1",
+	"entrypoint": "Danbooru",
+	"type": "system"
+}
