@@ -28,7 +28,7 @@ class DanbooruExtension extends Minz_Extension {
         if ($dom === false) { $html = "Couldn't load DOM."; }
         else {
         	$content = $dom->getElementById("content");
-        	if ($content === null) { $html = "Could not find content in DOM"; }
+        	if ($content === null) { $html = '<p style="background: pink; font-weight: bold;">Could not find content in DOM. Full page fallback.</p>' . $dom->saveHTML(); }
         	else { $html = $dom->saveHTML($dom->getElementById("content")); }
     	}
 
