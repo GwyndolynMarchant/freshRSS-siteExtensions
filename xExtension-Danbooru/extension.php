@@ -25,8 +25,8 @@ class DanbooruExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
         curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
         curl_setopt($ch, CURLOPT_COOKIESESSION,true);
-		curl_setopt ($ch, CURLOPT_COOKIEJAR, $cookie); 
-		curl_setopt ($ch, CURLOPT_COOKIEFILE, $cookie);
+		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
+		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
         $responseJSON = curl_exec($ch);
 
@@ -56,18 +56,16 @@ class DanbooruExtension extends Minz_Extension {
 				// Get artist commentary
 				sleep(1);
 				$query = 'https://danbooru.donmai.us/artist_commentaries.json?search[post_id]=' . $response["id"];
-				var_dump($query);
 				$ch = curl_init($query);
 				curl_setopt($ch, CURLOPT_HEADER, 0);
 		        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
 		        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
 		        curl_setopt($ch, CURLOPT_COOKIESESSION,true);
-				curl_setopt ($ch, CURLOPT_COOKIEJAR, $cookie); 
-				curl_setopt ($ch, CURLOPT_COOKIEFILE, $cookie);
+				curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
+				curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 				curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
 				$response = json_decode(curl_exec($ch), true)[0];
-				var_dump($response);
 				if (empty($response["translated_description"])) {
 					$comment = "<h2>" . $response["original_title"] . "</h2><p>" . $response["original_description"] . "</p>";
 				} else {
