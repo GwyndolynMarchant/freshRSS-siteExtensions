@@ -9,7 +9,7 @@ class DeviantartExtension extends Minz_Extension {
         $this->registerHook('check_url_before_add', array($this, 'deviantartRedirect'));
 	}
 
-	public function deviantartRedirect($url) : Url {
+	public function deviantartRedirect($url) : string {
 		$rx = "/^(?:\w+\:\/\/)?www.deviantart.com\/([^\/]+)\/?.*$/";
 		$res = preg_match($rx, $url, $matches);
 		if ($res === false) return $url;
