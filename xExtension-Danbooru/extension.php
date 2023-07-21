@@ -22,7 +22,7 @@ class DanbooruExtension extends Minz_Extension {
 
 		// Load the actual page
 		libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
+        $doc = new DOMDocument;
         $doc->loadHTMLFile($entry->link());
         libxml_use_internal_errors(false);
         if ($doc === false) { $html = '<p style="background: pink; font-weight: bold;">Could not load DOM.</p>'; }
