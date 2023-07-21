@@ -2,69 +2,39 @@
 
 class DanbooruExtension extends Minz_Extension {
 
-    protected function supports($entry)
-    {
-        return (stripos($entry->link(), '://danbooru.donmai.us/posts') !== false);
-    }
-
-
-    public function install() { return true; }
-    public function uninstall() { return true; }
-    public function handleConfigureAction() { }
-
 	public function init(): void {
         $this->registerHook('entry_before_insert', array($this, 'danbooruFix'));
 	}
 
 	public function danbooruFix(FreshRSS_Entry $entry): FreshRSS_Entry {
-		if (!$this->supports($entry)) { return $entry; }
-
+		
+		// Return the entry if it's not a danbooru link
+		if (stripos($entry->link(), '://danbooru.donmai.us/posts') === false) { return $entry; }
+		
+		// Explode the tag list from the content of the feed
 		preg_match("/<p>(.*)<\/p>/", $entry->content(), $matches);
 		$entry->_tags(explode(" ", $matches[1]));
 		
+		// Load the actual page
 		libxml_use_internal_errors(true);
         $dom = new DOMDocument;
         $dom->loadHTMLFile($entry->link());
         libxml_use_internal_errors(false);
         $xpath = new DOMXpath($dom);
-        $content = $xpath->query("//section[@id='content']");
 
+        $html = "Couldn't load page";
+        $container = $xpath->query("//section[@id='content']");
+        if (!is_null($container)) {
+        	$content = $container->item(0);
+        	if ($content !== null) {
+                $html = $content->ownerDocument->saveHTML($node);
+            }
+
+        // Setting the content to the original post + the scraped page content - this is so we have video previews
         $originalHash = $entry->hash();
-        if (!is_null($content)) {
-        	$entry->_content($entry->content() . '\n' . $content->item(0)->ownerDocument->saveHTML($node));
-        } else {
-        	$entry->_content("We've got a problem!");
-        }
+        $entry->_content($entry->content() . '\n' . $html);
         $entry->_hash($originalHash);
 
 		return $entry;
 	}
-
-	    /**
-     * Embed the Comic image into the entry, if the feed is from Dilbert AND the image can be found in
-     * the origin sites content.
-     *
-     * @param FreshRSS_Entry $entry
-     * @return mixed
-     */
-    public function embedDilbert($entry)
-    {
-        if (!$this->supports($entry)) { return $entry; }
-
-        libxml_use_internal_errors(true);
-        $dom = new DOMDocument;
-        $dom->loadHTMLFile($entry->link());
-        libxml_use_internal_errors(false);
-        $xpath = new DOMXpath($dom);
-
-        $comicContainer = $xpath->query("//section[@id='content']");
-
-        if (!is_null($comicContainer)) {
-            $originalHash = $entry->hash();
-            $entry->_content($comicContainer->item(0)->ownerDocument->saveHTML($node));
-            $entry->_hash($originalHash);
-        }
-
-        return $entry;
-    }
 }
