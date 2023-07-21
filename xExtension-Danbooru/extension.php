@@ -2,6 +2,9 @@
 
 class DanbooruExtension extends Minz_Extension {
 
+    public function install() { return true; }
+    public function uninstall() { return true; }
+
 	public function init(): void {
         $this->registerHook('entry_before_insert', array($this, 'danbooruFix'));
 	}
