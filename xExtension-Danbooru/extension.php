@@ -18,18 +18,18 @@ class DanbooruExtension extends Minz_Extension {
 		preg_match("/<p>(.*)<\/p>/", $entry->content(), $matches);
 		$entry->_tags(explode(" ", $matches[1]));
 		
-		$html = "Danbooru page recognized but loading failed.";
+		$html = '<p style="background: pink; font-weight: bold;">Danbooru page recognized but loading failed.</p>';
 
 		// Load the actual page
 		libxml_use_internal_errors(true);
-        $dom = new DOMDocument;
-        $dom->loadHTMLFile($entry->link());
+        $doc = new DOMDocument();
+        $doc->loadHTMLFile($entry->link());
         libxml_use_internal_errors(false);
-        if ($dom === false) { $html = "Couldn't load DOM."; }
+        if ($doc === false) { $html = '<p style="background: pink; font-weight: bold;">Could not load DOM.</p>'; }
         else {
         	$content = $dom->getElementById("content");
-        	if ($content === null) { $html = '<p style="background: pink; font-weight: bold;">Could not find content in DOM. Full page fallback.</p>' . $dom->saveHTML(); }
-        	else { $html = $dom->saveHTML($dom->getElementById("content")); }
+        	if ($content === null) { $html = '<p style="background: pink; font-weight: bold;">Could not find content in DOM. Full page fallback.</p>' . $doc->saveHTML(); }
+        	else { $html = $doc->saveHTML($content); }
     	}
 
         // Setting the content to the original post + the scraped page content - this is so we have video previews
