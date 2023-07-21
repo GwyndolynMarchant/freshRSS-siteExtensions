@@ -32,6 +32,7 @@ class DanbooruExtension extends Minz_Extension {
         	if ($content !== null) {
                 $html = $content->ownerDocument->saveHTML($node);
             }
+        }
 
         // Setting the content to the original post + the scraped page content - this is so we have video previews
         $originalHash = $entry->hash();
