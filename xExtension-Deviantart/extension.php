@@ -32,6 +32,13 @@ class DeviantartExtension extends Minz_Extension {
 			$rem->parentNode->removeChild($rem);
 		}
 
+		$xpath = new DomXpath($dom);
+		$elementsToRemove = array();
+		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]', null, false) as $node) { $elementsToRemove[] = $node; }
+		foreach ($elementsToRemove as $rem) {
+			$rem->parentNode->removeChild($rem);
+		}
+
 		// Make the new post
 		$originalHash = $entry->hash();
 		$entry->_content($dom->saveHTML());
