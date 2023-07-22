@@ -20,7 +20,7 @@ class DeviantartExtension extends Minz_Extension {
 
 	public function deviantartCleanup(FreshRSS_Entry $entry): FreshRSS_Entry {
 		$dom = new DOMDocument;
-		$dom->loadHTML($entry->content())
+		$dom->loadHTML($entry->content());
 		$xpath = new DomXpath($dom);
 
 		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) {
