@@ -23,10 +23,11 @@ class DeviantartExtension extends Minz_Extension {
 		$dom->loadHTML('<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"></head><body><meta content="text/html; charset=utf-8" http-equiv="Content-Type">' . $entry->content() . '</body></html>');
 		$xpath = new DomXpath($dom);
 
-		var_dump($dom);
 		$elementsToRemove = array();
-		foreach ($xpath->query('//media:thumbnail', null, false) as $node) { $elementsToRemove[] = $node; }
-		foreach ($xpath->query('//description', null, false) as $node) { $elementsToRemove[] = $node; }
+
+		foreach ($xpath->query('//img[@alt="thumbnail"]', null, false) as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]', null, false) as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//figcaption[contains(@class, "enclosure-description")]', null, false) as $node) { $elementsToRemove[] = $node; }
 		foreach ($elementsToRemove as $rem) {
 			$rem->parentNode->removeChild($rem);
 		}
