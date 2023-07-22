@@ -25,10 +25,9 @@ class DeviantartExtension extends Minz_Extension {
 
 		$elementsToRemove = array();
 
-		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) { $elementsToRemove[] = $node; }
-		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]') as $node) { $elementsToRemove[] = $node; }
-		foreach ($xpath->query('//figcaption[contains(@class, "enclosure-description")]') as $node) { $elementsToRemove[] = $node; }
-		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]') as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//img[@alt="thumbnail"]', null, false) as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]', null, false) as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//figcaption[contains(@class, "enclosure-description")]', null, false) as $node) { $elementsToRemove[] = $node; }
 		foreach ($elementsToRemove as $rem) {
 			$rem->parentNode->removeChild($rem);
 		}
