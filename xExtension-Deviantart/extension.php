@@ -28,6 +28,7 @@ class DeviantartExtension extends Minz_Extension {
 		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) { $elementsToRemove[] = $node; }
 		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]') as $node) { $elementsToRemove[] = $node; }
 		foreach ($xpath->query('//figcaption[contains(@class, "enclosure-description")]') as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]') as $node) { $elementsToRemove[] = $node; }
 		foreach ($elementsToRemove as $rem) {
 			$rem->parentNode->removeChild($rem);
 		}
