@@ -20,7 +20,7 @@ class DeviantartExtension extends Minz_Extension {
 
 	public function deviantartCleanup(FreshRSS_Entry $entry): FreshRSS_Entry {
 		$dom = new DOMDocument;
-		$dom->loadHTML($entry->content(), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+		$dom->loadHTML('<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"></head><body><meta content="text/html; charset=utf-8" http-equiv="Content-Type">' . $entry->content() . '</body></html>');
 		$xpath = new DomXpath($dom);
 
 		$elementsToRemove = array();
