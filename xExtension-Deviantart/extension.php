@@ -20,14 +20,22 @@ class DeviantartExtension extends Minz_Extension {
 
 	public function deviantartCleanup(FreshRSS_Entry $entry): FreshRSS_Entry {
 		$dom = new DOMDocument;
-		$dom->loadHTML($entry->content());
+		$dom->loadHTML($entry->content(), LIBXML_HTML_NOIMPLIED);
 		$xpath = new DomXpath($dom);
 
 		$elementsToRemove = array();
 
-		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) { $node->nodeValue = ""; }
-		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]') as $node) { $node->nodeValue = ""; }
-		foreach ($xpath->query('//figcaption[contains(@class, "enclosure-description")]') as $node) { $node->nodeValue = ""; }
+		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) {
+			$node->nodeValue = "";
+		}
+		
+		foreach ($xpath->query('//img[contains(@class, "enclosure-thumbnail")]') as $node) {
+			$node->nodeValue = "";
+		}
+		
+		foreach ($xpath->query('//figcaption[contains(@class, "enclosure-description")]') as $node) {
+			$node->nodeValue = "";
+		}
 
 		// Make the new post
 		$originalHash = $entry->hash();
