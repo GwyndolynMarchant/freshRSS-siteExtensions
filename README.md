@@ -4,3 +4,4 @@ If like me you're a total freak for RSS feeds, you probably have realized that a
 
 # Currently supported sites
 - Danbooru [🔗](https://danbooru.donmai.us/) [📚](https://danbooru.donmai.us/wiki_pages/help:api) [⚙](xExtension-Danbooru/README.md)
+- DeviantArt [🔗](https://www.deviantart.com/) [📚](https://github.com/aai210/DeviantArt-RSS) [⚙](xExtension-Deviantart/README.md)
