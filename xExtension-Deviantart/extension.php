@@ -23,16 +23,13 @@ class DeviantartExtension extends Minz_Extension {
 		$dom->loadHTML($entry->content());
 		$xpath = new DomXpath($dom);
 
-		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) {
-    		$node->parentNode->removeChild($node);
-		}
+		$elementsToRemove = array();
 
-		foreach ($xpath->query('//img[has(@class, "enclosure-thumbnail")]') as $node) {
-    		$node->parentNode->removeChild($node);
-		}
-
-		foreach ($xpath->query('//figcaption[has(@class, "enclosure-description")]') as $node) {
-    		$node->parentNode->removeChild($node);
+		foreach ($xpath->query('//img[@alt="thumbnail"]') as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//img[has(@class, "enclosure-thumbnail")]') as $node) { $elementsToRemove[] = $node; }
+		foreach ($xpath->query('//figcaption[has(@class, "enclosure-description")]') as $node) { $elementsToRemove[] = $node; }
+		foreach ($elementsToRemove as $element) {
+			$element->parentNode->removeChild($element);
 		}
 
 		// Make the new post
