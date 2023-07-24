@@ -7,7 +7,7 @@ class DeviantartExtension extends Minz_Extension {
 
 	public function init(): void {
         $this->registerHook('check_url_before_add', array($this, 'deviantartRedirect'));
-        $this->registerHook('entry_before_display', array($this, 'deviantartCleanup'));
+        $this->registerHook('entry_before_insert', array($this, 'deviantartCleanup'));
 	}
 
 	public function deviantartRedirect($url) : string {
