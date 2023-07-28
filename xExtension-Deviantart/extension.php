@@ -11,6 +11,7 @@ class DeviantartExtension extends Minz_Extension {
 	}
 
 	public function deviantartRedirect($url) : string {
+		if (strpos($url, "www.deviantart.com") === false) return $url;
 		$rx = "/^(?:\w+\:\/\/)?www.deviantart.com\/([^\/]+)\/?.*$/";
 		$res = preg_match($rx, $url, $matches);
 		if ($res === false) return $url;

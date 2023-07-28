@@ -2,7 +2,7 @@
 	"name": "Deviantart Support",
 	"author": "Gwyndolyn Marchant",
 	"description": "Exposes secret RSS feeds and cleans RSS",
-	"version": "1.0",
+	"version": "1.0.1",
 	"entrypoint": "Deviantart",
 	"type": "system"
 }
