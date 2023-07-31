@@ -5,3 +5,4 @@ If like me you're a total freak for RSS feeds, you probably have realized that a
 # Currently supported sites
 - [Danbooru](xExtension-Danbooru/README.md): Using the [API](https://danbooru.donmai.us/wiki_pages/help:api).
 - [DeviantArt](xExtension-Deviantart/README.md): Redirected through the [secret backend](https://github.com/aai210/DeviantArt-RSS).
+- [e621](xExtension-e621/README.md): Using the [API](https://e621.net/wiki_pages/2425).
