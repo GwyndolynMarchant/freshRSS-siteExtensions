@@ -2,7 +2,7 @@
 	"name": "e621 Support",
 	"author": "Gwyndolyn Marchant",
 	"description": "Fixes e621 feeds",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"entrypoint": "ESixTwentyOne",
 	"type": "system"
 }

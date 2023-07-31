@@ -6,8 +6,8 @@ class ESixTwentyOneExtension extends Minz_Extension {
     public function uninstall() { return true; }
 
 	public function init(): void {
-        //$this->registerHook('entry_before_insert', array($this, 'danbooruAPI'));
-        $this->registerHook('entry_before_display', array($this, 'e621API'));
+        $this->registerHook('entry_before_insert', array($this, 'e621API'));
+        //$this->registerHook('entry_before_display', array($this, 'e621API'));
 	}
 
 	public function e621API(FreshRSS_Entry $entry): FreshRSS_Entry {
