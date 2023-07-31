@@ -32,7 +32,7 @@ class ESixTwentyOneExtension extends Minz_Extension {
         if(curl_error($ch)) {
     		$comment = curl_error($ch);
 		} else {
-	        $response = json_decode($responseJSON, true);
+	        $response = json_decode($responseJSON, true)["post"];
 	        $file = $response["file"]["url"];
 	        $ext = $response["file"]["ext"];
 	        
