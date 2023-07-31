@@ -11,12 +11,16 @@ class DeviantartExtension extends Minz_Extension {
 	}
 
 	public function deviantartRedirect($url) : string {
-		if (strpos($url, "deviantart") === false) return $url;
-		$rx = "/^(?:\w+\:\/\/)?www.deviantart.com\/([^\/]+)\/?.*$/";
-		$res = preg_match($rx, $url, $matches);
-		if ($res === false) return $url;
-		$uname = $matches[1];
-		return "https://backend.deviantart.com/rss.xml?q=gallery:$uname";
+		if (strpos($url, "deviantart") === false) { return $url; }
+		else {
+			$rx = "/^(?:\w+\:\/\/)?www.deviantart.com\/([^\/]+)\/?.*$/";
+			$res = preg_match($rx, $url, $matches);
+			if ($res === false) { return $url; }
+			else {
+				$uname = $matches[1];
+				return "https://backend.deviantart.com/rss.xml?q=gallery:$uname";
+			}
+		}
 	}
 
 	public function deviantartCleanup(FreshRSS_Entry $entry): FreshRSS_Entry {
