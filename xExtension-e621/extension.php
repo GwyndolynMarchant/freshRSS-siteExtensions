@@ -50,7 +50,7 @@ class ESixTwentyOneExtension extends Minz_Extension {
 		        } 
 
 		        // Explode the tag list
-				$entry->_tags(array_values($response["tags"]));
+				$entry->_tags(array_merge(array_values($response["tags"])));
 				$comment = "<p>" . $response["description"] . "</p>";
 			}
 		}
