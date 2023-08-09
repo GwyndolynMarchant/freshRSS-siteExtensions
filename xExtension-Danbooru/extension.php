@@ -17,17 +17,15 @@ class DanbooruExtension extends Minz_Extension {
 		$content = "<p style='background: pink; color: red; font-weight: bold;'>ERROR</p>";
 
 		// Get the json info for the post
-		sleep(1);
         $ch = curl_init($entry->link() . ".json");
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
-        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"); // Bypass cloudflare by using mozilla
         curl_setopt($ch, CURLOPT_COOKIESESSION,true);
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
-		$t1 = microtime(true);
         $responseJSON = curl_exec($ch);
 
         if(curl_error($ch)) {
@@ -64,11 +62,7 @@ class DanbooruExtension extends Minz_Extension {
 				curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
 				curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 				curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
-				
-				$dt = microtime(true) - $t1;
-				if ($dt < 1) { usleep(1000000 * (1 - $dt)); }
-				
-				$t1 = microtime(true);
+
 				$response = json_decode(curl_exec($ch), true)[0];
 				if (empty($response["translated_description"])) {
 					$comment = "<h2>" . $response["original_title"] . "</h2><p>" . $response["original_description"] . "</p>";
@@ -82,9 +76,6 @@ class DanbooruExtension extends Minz_Extension {
 		$originalHash = $entry->hash();
 		$entry->_content($content . $comment);
 		$entry->_hash($originalHash);
-
-		$dt = microtime(true) - $t1;
-		if ($dt < 1) { usleep(1000000 * (1 - $dt)); }
 
 		return $entry;
 	}
