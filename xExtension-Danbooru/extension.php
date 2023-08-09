@@ -15,6 +15,9 @@ class DanbooruExtension extends Minz_Extension {
 		// Return the entry if it's not a danbooru link
 		if (stripos($entry->link(), '://danbooru.donmai.us/posts') === false) { return $entry; }
 		
+		// Stopwatch for rate throttling
+		$c = new HRTime\StopWatch;
+
 		$content = "<p style='background: pink; color: red; font-weight: bold;'>ERROR</p>";
 
 		// Get the json info for the post
@@ -28,6 +31,7 @@ class DanbooruExtension extends Minz_Extension {
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
+		$c->start();
         $responseJSON = curl_exec($ch);
 
         if(curl_error($ch)) {
@@ -54,7 +58,6 @@ class DanbooruExtension extends Minz_Extension {
 				$entry->_tags(explode(" ", $response["tag_string"]));
 
 				// Get artist commentary
-				sleep(1);
 				$query = 'https://danbooru.donmai.us/artist_commentaries.json?search[post_id]=' . $response["id"];
 				$ch = curl_init($query);
 				curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -65,6 +68,12 @@ class DanbooruExtension extends Minz_Extension {
 				curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
 				curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 				curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
+				
+				$c->stop();
+				$dt = 1000000 - $c->getLastElapsedTime(HRTime\Unit::MICROSECOND);
+				if ($dt > 0) { usleep($dt); }
+				
+				$c->start();
 				$response = json_decode(curl_exec($ch), true)[0];
 				if (empty($response["translated_description"])) {
 					$comment = "<h2>" . $response["original_title"] . "</h2><p>" . $response["original_description"] . "</p>";
@@ -78,6 +87,9 @@ class DanbooruExtension extends Minz_Extension {
 		$originalHash = $entry->hash();
 		$entry->_content($content . $comment);
 		$entry->_hash($originalHash);
+
+		$dt = 1000000 - $c->getLastElapsedTime(HRTime\Unit::MICROSECOND);
+		if ($dt > 0) { usleep($dt); }
 
 		return $entry;
 	}
