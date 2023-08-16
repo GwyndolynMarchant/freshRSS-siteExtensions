@@ -17,7 +17,6 @@ class ESixTwentyOneExtension extends Minz_Extension {
 		$content = "<p style='background: pink; color: red; font-weight: bold;'>ERROR</p>";
 
 		// Get the json info for the post
-		sleep(1);
         $ch = curl_init($entry->link() . ".json");
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
