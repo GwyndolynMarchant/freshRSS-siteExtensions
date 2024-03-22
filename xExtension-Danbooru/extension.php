@@ -24,6 +24,7 @@ class DanbooruExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"); // Bypass cloudflare by using mozilla
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
         $responseJSON = curl_exec($ch);
+        curl_close($ch);
 
         if(curl_error($ch)) {
     		$comment = curl_error($ch);
@@ -55,8 +56,10 @@ class DanbooruExtension extends Minz_Extension {
 		        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
 		        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
 				curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
+				$responseJSON = curl_exec($ch);
+				curl_close($ch);
 
-				$response = json_decode(curl_exec($ch), true)[0];
+				$response = json_decode($responseJSON, true)[0];
 				if (empty($response["translated_description"])) {
 					$comment = "<h2>" . $response["original_title"] . "</h2><p>" . $response["original_description"] . "</p>";
 				} else {
