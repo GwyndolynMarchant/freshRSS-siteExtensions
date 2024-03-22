@@ -18,13 +18,16 @@ class DanbooruExtension extends Minz_Extension {
 
 		// Get the json info for the post
         $ch = curl_init($entry->link() . ".json");
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_FAILONERROR, true);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"); // Bypass cloudflare by using mozilla
+        //curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"); // Bypass cloudflare by using mozilla
+        curl_setopt($ch, CURLOPT_COOKIESESSION,true);
+		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
+		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
 		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
