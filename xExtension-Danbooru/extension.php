@@ -14,13 +14,13 @@ class DanbooruExtension extends Minz_Extension {
 		// Return the entry if it's not a danbooru link
 		if (stripos($entry->link(), '://danbooru.donmai.us/posts') === false) { return $entry; }
 
-		$content = "<p style='background: pink; color: red; font-weight: bold;'>ERROR</p>";
+		$content = "<p style='background-color: pink; color: red !important; font-weight: bold;'>ERROR</p>";
 
 		// Get the json info for the post
         $ch = curl_init($entry->link() . ".json");
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, false);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
