@@ -23,6 +23,7 @@ class DanbooruExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_FAILONERROR, false);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT , "FreshRSS-siteExtensions/0.1 (by hellgnoll on danbooru)");
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
         $responseJSON = curl_exec($ch);
