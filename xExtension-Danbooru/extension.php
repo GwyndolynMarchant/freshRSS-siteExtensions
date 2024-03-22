@@ -22,9 +22,6 @@ class DanbooruExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
         curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"); // Bypass cloudflare by using mozilla
-        curl_setopt($ch, CURLOPT_COOKIESESSION,true);
-		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
-		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
         $responseJSON = curl_exec($ch);
 
@@ -37,7 +34,6 @@ class DanbooruExtension extends Minz_Extension {
 	        
 	        if ($response === false) { $comment = "Could not parse JSON: " . $responseJSON; }
 	        else {
-
 		        // Grab the content link
 		        $content = "ERROR: Unrecognized content type - " . $ext . "<br/>" . $responseJSON;
 		        if (in_array($ext, array("jpg", "jpeg", "png", "gif", "bmp", "webp"))) {
@@ -58,9 +54,6 @@ class DanbooruExtension extends Minz_Extension {
 		        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
 		        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
-		        curl_setopt($ch, CURLOPT_COOKIESESSION,true);
-				curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
-				curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 				curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
 
 				$response = json_decode(curl_exec($ch), true)[0];

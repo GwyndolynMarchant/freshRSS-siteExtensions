@@ -22,9 +22,6 @@ class ESixTwentyOneExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
         curl_setopt($ch, CURLOPT_USERAGENT , "FreshRSS-siteExtensions/0.1 (by hellgnoll on e621)");
-        curl_setopt($ch, CURLOPT_COOKIESESSION,true);
-		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie); 
-		curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
         $responseJSON = curl_exec($ch);
 
