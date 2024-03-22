@@ -18,7 +18,9 @@ class DanbooruExtension extends Minz_Extension {
 
 		// Get the json info for the post
         $ch = curl_init($entry->link() . ".json");
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
@@ -29,7 +31,7 @@ class DanbooruExtension extends Minz_Extension {
         $responseJSON = curl_exec($ch);
 
         if(curl_error($ch) || $httpcode != 200) {
-    		$comment = "Response " . $httpcode . " -- " . curl_error($ch);
+    		$comment = "Response " . $httpcode . " -- " . curl_errno($ch) . " : " . curl_error($ch);
 		} else {
 	        $response = json_decode($responseJSON, true);
 	        $file = $response["file_url"];
