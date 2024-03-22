@@ -7,6 +7,13 @@ class DanbooruExtension extends Minz_Extension {
 
 	public function init(): void {
         $this->registerHook('entry_before_insert', array($this, 'danbooruAPI'));
+        $this->registerHook('simplepie_before_init', array($this, 'curlHook'));
+	}
+
+	public function curlHook($simplePie, $feed) {
+		if (stripos($feed->url(), '://danbooru.donmai.us/posts') === true) {
+			$simplePie->set_useragent(FRESHRSS_USERAGENT . ' / FreshRSS-siteExtensions/0.1 (by hellgnoll on danbooru)');
+		}
 	}
 
 	public function danbooruAPI(FreshRSS_Entry $entry): FreshRSS_Entry {
