@@ -25,8 +25,8 @@ class DanbooruExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
-		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $responseJSON = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if(curl_error($ch) || $httpcode != 200) {
     		$comment = "Response " . $httpcode . " -- " . curl_errno($ch) . " : " . curl_error($ch) . "<br/>" . $responseJSON;
