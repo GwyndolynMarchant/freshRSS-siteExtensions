@@ -29,7 +29,7 @@ class DanbooruExtension extends Minz_Extension {
         $responseJSON = curl_exec($ch);
 
         if(curl_error($ch) || $httpcode != 200) {
-    		$comment = "Response " . $httpcode . " -- " . curl_errno($ch) . " : " . curl_error($ch) . "<br/>" .. $responseJSON;
+    		$comment = "Response " . $httpcode . " -- " . curl_errno($ch) . " : " . curl_error($ch) . "<br/>" . $responseJSON;
 		} else {
 	        $response = json_decode($responseJSON, true);
 	        $file = $response["file_url"];
