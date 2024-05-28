@@ -48,14 +48,13 @@ class DanbooruExtension extends Minz_Extension {
 	        if ($response === false) { $comment = "Could not parse JSON: " . $responseJSON; }
 	        else {
 		        // Grab the content link
-		        $preface = "<em>Danbooru currently disallows external hotlinking due to AI scraping. Images may not load.</em>";
 		        $content = "ERROR: Unrecognized content type - " . $ext . "<br/>" . $responseJSON;
 		        if (in_array($ext, array("jpg", "jpeg", "png", "gif", "bmp", "webp"))) {
 		        	// Picture
-		        	$content = "<p>$preface</p><img src='$file'>";
+		        	$content = "<img src='$file' referrerpolicy='origin'>";
 		        } elseif (in_array($ext, array("mp4", "mov", "webm", "mkv", "ogg" ))) {
 		        	// Video
-		        	$content = "<p>$preface</p><video controls><source src='$file' type='video/$ext'></video>";
+		        	$content = "<video controls><source src='$file' type='video/$ext'></video>";
 		        } 
 
 		        // Explode the tag list
