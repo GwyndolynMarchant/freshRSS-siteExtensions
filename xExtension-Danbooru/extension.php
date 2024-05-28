@@ -23,6 +23,8 @@ class DanbooruExtension extends Minz_Extension {
 
 		$content = "<p style='background-color: pink; color: red !important; font-weight: bold;'>ERROR</p>";
 
+		$userAgent = "FreshRSS-siteExtensions/0.1 (by hellgnoll on danbooru)";
+
 		// Get the json info for the post
         $ch = curl_init($entry->link() . ".json");
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
@@ -30,7 +32,7 @@ class DanbooruExtension extends Minz_Extension {
         curl_setopt($ch, CURLOPT_FAILONERROR, false);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT , "FreshRSS-siteExtensions/0.1 (by hellgnoll on danbooru)");
+        curl_setopt($ch, CURLOPT_USERAGENT , $userAgent);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
         $responseJSON = curl_exec($ch);
@@ -65,7 +67,7 @@ class DanbooruExtension extends Minz_Extension {
 				curl_setopt($ch, CURLOPT_HEADER, 0);
 		        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,0);
-		        curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+		        curl_setopt($ch, CURLOPT_USERAGENT , $userAgent);
 				curl_setopt($ch, CURLOPT_FRESH_CONNECT,true);
 				$responseJSON = curl_exec($ch);
 
